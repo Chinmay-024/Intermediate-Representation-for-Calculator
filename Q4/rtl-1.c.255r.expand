@@ -1,0 +1,433 @@
+
+;; Function main (main, funcdef_no=6, decl_uid=3700, cgraph_uid=7, symbol_order=6)
+
+int main ()
+{
+  int i;
+  int sum;
+  int D.3709;
+  int _7;
+
+;;   basic block 2, loop depth 0
+;;    pred:       ENTRY
+  sum_3 = 0;
+  i_4 = 1;
+  goto <bb 4>; [INV]
+;;    succ:       4
+
+;;   basic block 3, loop depth 1
+;;    pred:       4
+  sum_8 = sum_1 + i_2;
+  i_9 = i_2 + 1;
+;;    succ:       4
+
+;;   basic block 4, loop depth 1
+;;    pred:       2
+;;                3
+  # sum_1 = PHI <sum_3(2), sum_8(3)>
+  # i_2 = PHI <i_4(2), i_9(3)>
+  if (i_2 <= 10)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+;;    succ:       3
+;;                5
+
+;;   basic block 5, loop depth 0
+;;    pred:       4
+  printf ("Sum is %d\n", sum_1);
+  _7 = 0;
+;;    succ:       6
+
+;;   basic block 6, loop depth 0
+;;    pred:       5
+<L3>:
+  return _7;
+;;    succ:       EXIT
+
+}
+
+
+
+Partition map 
+
+Partition 1 (sum_1 - 1 )
+Partition 2 (i_2 - 2 )
+Partition 3 (sum_3 - 3 )
+Partition 4 (i_4 - 4 )
+Partition 7 (_7 - 7 )
+Partition 8 (sum_8 - 8 )
+Partition 9 (i_9 - 9 )
+Partition 10 (_10(D) - 10 )
+
+
+Coalescible Partition map 
+
+Partition 0, base 0 (sum_1 - 1 3 8 )
+Partition 1, base 1 (i_2 - 2 4 9 )
+Partition 6, base 2 (_10(D) - 10 )
+
+
+Partition map 
+
+Partition 0 (sum_1 - 1 )
+Partition 1 (i_2 - 2 )
+Partition 2 (sum_3 - 3 )
+Partition 3 (i_4 - 4 )
+Partition 4 (sum_8 - 8 )
+Partition 5 (i_9 - 9 )
+Partition 6 (_10(D) - 10 )
+
+
+Conflict graph:
+
+After sorting:
+Sorted Coalesce list:
+(2147483646, 0) sum_1 <-> sum_3
+(2147483646, 0) sum_1 <-> sum_8
+(2147483646, 0) i_2 <-> i_4
+(2147483646, 0) i_2 <-> i_9
+
+Partition map 
+
+Partition 0 (sum_1 - 1 )
+Partition 1 (i_2 - 2 )
+Partition 2 (sum_3 - 3 )
+Partition 3 (i_4 - 4 )
+Partition 4 (sum_8 - 8 )
+Partition 5 (i_9 - 9 )
+Partition 6 (_10(D) - 10 )
+
+Coalesce list: (1)sum_1 & (3)sum_3 [map: 0, 2] : Success -> 0
+Coalesce list: (1)sum_1 & (8)sum_8 [map: 0, 4] : Success -> 0
+Coalesce list: (2)i_2 & (4)i_4 [map: 1, 3] : Success -> 1
+Coalesce list: (2)i_2 & (9)i_9 [map: 1, 5] : Success -> 1
+After Coalescing:
+
+Partition map 
+
+Partition 0 (sum_1 - 1 3 8 )
+Partition 1 (i_2 - 2 4 9 )
+Partition 2 (_7 - 7 )
+Partition 3 (_10(D) - 10 )
+
+int main ()
+{
+  int i;
+  int sum;
+  int D.3709;
+  int _7;
+  int _10(D);
+
+;;   basic block 2, loop depth 0
+;;    pred:       ENTRY
+  sum_3 = 0;
+  i_4 = 1;
+  goto <bb 4>; [INV]
+;;    succ:       4
+
+;;   basic block 3, loop depth 1
+;;    pred:       4
+  sum_8 = sum_1 + i_2;
+  i_9 = i_2 + 1;
+;;    succ:       4
+
+;;   basic block 4, loop depth 1
+;;    pred:       2
+;;                3
+  # sum_1 = PHI <sum_3(2), sum_8(3)>
+  # i_2 = PHI <i_4(2), i_9(3)>
+  if (i_2 <= 10)
+    goto <bb 3>; [INV]
+  else
+    goto <bb 5>; [INV]
+;;    succ:       3
+;;                5
+
+;;   basic block 5, loop depth 0
+;;    pred:       4
+  printf ("Sum is %d\n", sum_1);
+  _7 = 0;
+;;    succ:       6
+
+;;   basic block 6, loop depth 0
+;;    pred:       5
+<L3>:
+  return _7;
+;;    succ:       EXIT
+
+}
+
+
+Partition 1: size 4 align 4
+	i_2
+Partition 0: size 4 align 4
+	sum_1
+
+;; Generating RTL for gimple basic block 2
+
+;; sum_3 = 0;
+
+(insn 5 4 0 (set (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                (const_int -8 [0xfffffffffffffff8])) [1 sum+0 S4 A64])
+        (const_int 0 [0])) "1.c":6:9 -1
+     (nil))
+
+;; i_4 = 1;
+
+(insn 6 5 0 (set (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                (const_int -4 [0xfffffffffffffffc])) [1 i+0 S4 A32])
+        (const_int 1 [0x1])) "1.c":7:14 -1
+     (nil))
+
+;; Generating RTL for gimple basic block 3
+
+;; sum_8 = sum_1 + i_2;
+
+(insn 10 9 11 (set (reg:SI 84)
+        (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                (const_int -4 [0xfffffffffffffffc])) [1 i+0 S4 A32])) "1.c":9:13 -1
+     (nil))
+
+(insn 11 10 0 (parallel [
+            (set (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                        (const_int -8 [0xfffffffffffffff8])) [1 sum+0 S4 A64])
+                (plus:SI (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                            (const_int -8 [0xfffffffffffffff8])) [1 sum+0 S4 A64])
+                    (reg:SI 84)))
+            (clobber (reg:CC 17 flags))
+        ]) "1.c":9:13 -1
+     (nil))
+
+;; i_9 = i_2 + 1;
+
+(insn 12 11 0 (parallel [
+            (set (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                        (const_int -4 [0xfffffffffffffffc])) [1 i+0 S4 A32])
+                (plus:SI (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                            (const_int -4 [0xfffffffffffffffc])) [1 i+0 S4 A32])
+                    (const_int 1 [0x1])))
+            (clobber (reg:CC 17 flags))
+        ]) "1.c":7:31 discrim 3 -1
+     (nil))
+
+;; Generating RTL for gimple basic block 4
+
+;; 
+
+(code_label 13 12 14 2 (nil) [0 uses])
+
+(note 14 13 0 NOTE_INSN_BASIC_BLOCK)
+
+;; if (i_2 <= 10)
+
+(insn 18 14 19 (set (reg:CCGC 17 flags)
+        (compare:CCGC (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                    (const_int -4 [0xfffffffffffffffc])) [1 i+0 S4 A32])
+            (const_int 10 [0xa]))) "1.c":7:23 discrim 1 -1
+     (nil))
+
+(jump_insn 19 18 0 (set (pc)
+        (if_then_else (le (reg:CCGC 17 flags)
+                (const_int 0 [0]))
+            (label_ref 15)
+            (pc))) "1.c":7:23 discrim 1 -1
+     (nil))
+
+;; Generating RTL for gimple basic block 5
+
+;; printf ("Sum is %d\n", sum_1);
+
+(insn 21 20 22 (set (reg:SI 85)
+        (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                (const_int -8 [0xfffffffffffffff8])) [1 sum+0 S4 A64])) "1.c":11:5 -1
+     (nil))
+
+(insn 22 21 23 (set (reg:SI 4 si)
+        (reg:SI 85)) "1.c":11:5 -1
+     (nil))
+
+(insn 23 22 24 (set (reg:DI 86)
+        (symbol_ref/f:DI ("*.LC0") [flags 0x2]  <var_decl 0x7f4f8b06c2d0 *.LC0>)) "1.c":11:5 -1
+     (nil))
+
+(insn 24 23 25 (set (reg:DI 5 di)
+        (reg:DI 86)) "1.c":11:5 -1
+     (expr_list:REG_EQUAL (symbol_ref/f:DI ("*.LC0") [flags 0x2]  <var_decl 0x7f4f8b06c2d0 *.LC0>)
+        (nil)))
+
+(insn 25 24 26 (set (reg:QI 0 ax)
+        (const_int 0 [0])) "1.c":11:5 -1
+     (nil))
+
+(call_insn 26 25 0 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:DI ("printf") [flags 0x41]  <function_decl 0x7f4f8b32fa00 printf>) [0 __builtin_printf S1 A8])
+            (const_int 0 [0]))) "1.c":11:5 -1
+     (nil)
+    (expr_list (use (reg:QI 0 ax))
+        (expr_list:DI (use (reg:DI 5 di))
+            (expr_list:SI (use (reg:SI 4 si))
+                (nil)))))
+
+;; _7 = 0;
+
+(insn 27 26 0 (set (reg:SI 82 [ _7 ])
+        (const_int 0 [0])) "1.c":12:12 -1
+     (nil))
+
+;; Generating RTL for gimple basic block 6
+
+;; <L3>:
+
+(code_label 28 27 29 4 (nil) [0 uses])
+
+(note 29 28 0 NOTE_INSN_BASIC_BLOCK)
+
+;; return _7;
+
+(insn 30 29 31 (set (reg:SI 83 [ <retval> ])
+        (reg:SI 82 [ _7 ])) "1.c":13:1 -1
+     (nil))
+
+(jump_insn 31 30 32 (set (pc)
+        (label_ref 0)) "1.c":13:1 -1
+     (nil))
+
+(barrier 32 31 0)
+
+
+try_optimize_cfg iteration 1
+
+Merging block 3 into block 2...
+Merged blocks 2 and 3.
+Merged 2 and 3 without moving.
+Merging block 7 into block 6...
+Merged blocks 6 and 7.
+Merged 6 and 7 without moving.
+Removing jump 31.
+Merging block 8 into block 6...
+Merged blocks 6 and 8.
+Merged 6 and 8 without moving.
+
+
+try_optimize_cfg iteration 2
+
+fix_loop_structure: fixing up loops for function
+
+
+;;
+;; Full RTL generated for this function:
+;;
+(note 1 0 3 NOTE_INSN_DELETED)
+;; basic block 2, loop depth 0, maybe hot
+;;  prev block 0, next block 4, flags: (NEW, REACHABLE, RTL)
+;;  pred:       ENTRY (FALLTHRU)
+(note 3 1 2 2 [bb 2] NOTE_INSN_BASIC_BLOCK)
+(note 2 3 5 2 NOTE_INSN_FUNCTION_BEG)
+(insn 5 2 6 2 (set (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                (const_int -8 [0xfffffffffffffff8])) [1 sum+0 S4 A64])
+        (const_int 0 [0])) "1.c":6:9 -1
+     (nil))
+(insn 6 5 7 2 (set (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                (const_int -4 [0xfffffffffffffffc])) [1 i+0 S4 A32])
+        (const_int 1 [0x1])) "1.c":7:14 -1
+     (nil))
+(jump_insn 7 6 8 2 (set (pc)
+        (label_ref 13)) "1.c":7:5 -1
+     (nil)
+ -> 13)
+;;  succ:       5 1.c:7:5
+
+(barrier 8 7 15)
+;; basic block 4, loop depth 1, maybe hot
+;;  prev block 2, next block 5, flags: (NEW, REACHABLE, RTL)
+;;  pred:       5
+(code_label 15 8 9 4 3 (nil) [1 uses])
+(note 9 15 10 4 [bb 4] NOTE_INSN_BASIC_BLOCK)
+(insn 10 9 11 4 (set (reg:SI 84)
+        (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                (const_int -4 [0xfffffffffffffffc])) [1 i+0 S4 A32])) "1.c":9:13 -1
+     (nil))
+(insn 11 10 12 4 (parallel [
+            (set (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                        (const_int -8 [0xfffffffffffffff8])) [1 sum+0 S4 A64])
+                (plus:SI (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                            (const_int -8 [0xfffffffffffffff8])) [1 sum+0 S4 A64])
+                    (reg:SI 84)))
+            (clobber (reg:CC 17 flags))
+        ]) "1.c":9:13 -1
+     (nil))
+(insn 12 11 13 4 (parallel [
+            (set (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                        (const_int -4 [0xfffffffffffffffc])) [1 i+0 S4 A32])
+                (plus:SI (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                            (const_int -4 [0xfffffffffffffffc])) [1 i+0 S4 A32])
+                    (const_int 1 [0x1])))
+            (clobber (reg:CC 17 flags))
+        ]) "1.c":7:31 discrim 3 -1
+     (nil))
+;;  succ:       5 (FALLTHRU,DFS_BACK)
+
+;; basic block 5, loop depth 1, maybe hot
+;;  prev block 4, next block 6, flags: (NEW, REACHABLE, RTL)
+;;  pred:       2 1.c:7:5
+;;              4 (FALLTHRU,DFS_BACK)
+(code_label 13 12 14 5 2 (nil) [1 uses])
+(note 14 13 18 5 [bb 5] NOTE_INSN_BASIC_BLOCK)
+(insn 18 14 19 5 (set (reg:CCGC 17 flags)
+        (compare:CCGC (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                    (const_int -4 [0xfffffffffffffffc])) [1 i+0 S4 A32])
+            (const_int 10 [0xa]))) "1.c":7:23 discrim 1 -1
+     (nil))
+(jump_insn 19 18 20 5 (set (pc)
+        (if_then_else (le (reg:CCGC 17 flags)
+                (const_int 0 [0]))
+            (label_ref 15)
+            (pc))) "1.c":7:23 discrim 1 -1
+     (nil)
+ -> 15)
+;;  succ:       4
+;;              6 (FALLTHRU)
+
+;; basic block 6, loop depth 0, maybe hot
+;;  prev block 5, next block 1, flags: (NEW, REACHABLE, RTL)
+;;  pred:       5 (FALLTHRU)
+(note 20 19 21 6 [bb 6] NOTE_INSN_BASIC_BLOCK)
+(insn 21 20 22 6 (set (reg:SI 85)
+        (mem/c:SI (plus:DI (reg/f:DI 77 virtual-stack-vars)
+                (const_int -8 [0xfffffffffffffff8])) [1 sum+0 S4 A64])) "1.c":11:5 -1
+     (nil))
+(insn 22 21 23 6 (set (reg:SI 4 si)
+        (reg:SI 85)) "1.c":11:5 -1
+     (nil))
+(insn 23 22 24 6 (set (reg:DI 86)
+        (symbol_ref/f:DI ("*.LC0") [flags 0x2]  <var_decl 0x7f4f8b06c2d0 *.LC0>)) "1.c":11:5 -1
+     (nil))
+(insn 24 23 25 6 (set (reg:DI 5 di)
+        (reg:DI 86)) "1.c":11:5 -1
+     (expr_list:REG_EQUAL (symbol_ref/f:DI ("*.LC0") [flags 0x2]  <var_decl 0x7f4f8b06c2d0 *.LC0>)
+        (nil)))
+(insn 25 24 26 6 (set (reg:QI 0 ax)
+        (const_int 0 [0])) "1.c":11:5 -1
+     (nil))
+(call_insn 26 25 27 6 (set (reg:SI 0 ax)
+        (call (mem:QI (symbol_ref:DI ("printf") [flags 0x41]  <function_decl 0x7f4f8b32fa00 printf>) [0 __builtin_printf S1 A8])
+            (const_int 0 [0]))) "1.c":11:5 -1
+     (nil)
+    (expr_list (use (reg:QI 0 ax))
+        (expr_list:DI (use (reg:DI 5 di))
+            (expr_list:SI (use (reg:SI 4 si))
+                (nil)))))
+(insn 27 26 30 6 (set (reg:SI 82 [ _7 ])
+        (const_int 0 [0])) "1.c":12:12 -1
+     (nil))
+(insn 30 27 34 6 (set (reg:SI 83 [ <retval> ])
+        (reg:SI 82 [ _7 ])) "1.c":13:1 -1
+     (nil))
+(insn 34 30 35 6 (set (reg/i:SI 0 ax)
+        (reg:SI 83 [ <retval> ])) "1.c":13:1 -1
+     (nil))
+(insn 35 34 0 6 (use (reg/i:SI 0 ax)) "1.c":13:1 -1
+     (nil))
+;;  succ:       EXIT [always]  (FALLTHRU)
+

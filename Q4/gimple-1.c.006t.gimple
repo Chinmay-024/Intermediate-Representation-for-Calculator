@@ -1,0 +1,29 @@
+int main ()
+gimple_bind <
+  int D.3709;
+
+  gimple_bind <
+    int sum;
+
+    gimple_assign <integer_cst, sum, 0, NULL, NULL>
+    gimple_bind <
+      int i;
+
+      gimple_assign <integer_cst, i, 1, NULL, NULL>
+      gimple_goto <<D.3707>>
+      gimple_label <<D.3706>>
+      gimple_assign <plus_expr, sum, sum, i, NULL>
+      gimple_assign <plus_expr, i, i, 1, NULL>
+      gimple_label <<D.3707>>
+      gimple_cond <le_expr, i, 10, <D.3706>, <D.3704>>
+      gimple_label <<D.3704>>
+    >
+    gimple_call <printf, NULL, "Sum is %d\n", sum>
+    gimple_assign <integer_cst, D.3709, 0, NULL, NULL>
+    gimple_return <D.3709>
+  >
+  gimple_assign <integer_cst, D.3709, 0, NULL, NULL>
+  gimple_return <D.3709>
+>
+
+
